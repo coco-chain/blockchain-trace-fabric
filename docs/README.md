@@ -17,6 +17,15 @@ docker tag hyperledger/fabric-baseimage:0.4.10  hyperledger/fabric-baseimage &&
 docker tag hyperledger/fabric-baseos:0.4.10 hyperledger/fabric-baseos && 
 docker tag hyperledger/fabric-couchdb:0.4.10 hyperledger/fabric-couchdb
 
+docker pull hyperledger/fabric-peer && 
+docker pull hyperledger/fabric-orderer && 
+docker pull hyperledger/fabric-ca && 
+docker pull hyperledger/fabric-tools && 
+docker pull hyperledger/fabric-ccenv && 
+docker pull hyperledger/fabric-baseimage && 
+docker pull hyperledger/fabric-baseos && 
+docker pull hyperledger/fabric-couchdb
+
 sudo su
 cd blockchain-trace-fabric/blockchain-trace-bcnetwork/webapp
 ./start.sh
