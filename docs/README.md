@@ -27,7 +27,7 @@ docker pull hyperledger/fabric-baseos &&
 docker pull hyperledger/fabric-couchdb
 
 sudo su
-cd blockchain-trace-fabric/blockchain-trace-bcnetwork/webapp
+cd blockchain-trace-fabric/blockchain-trace-bcnetwork/basic-network
 ./start.sh
 
 docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.trace.com/users/Admin@org1.trace.com/msp" -e "CORE_PEER_ADDRESS=peer0.org1.trace.com:7051" cli peer chaincode install -n drivercc -v 1.0 -l golang -p github.com/chaincode/drivercc/go/
