@@ -16,4 +16,8 @@ docker tag hyperledger/fabric-ccenv:1.2.0 hyperledger/fabric-ccenv &&
 docker tag hyperledger/fabric-baseimage:0.4.10  hyperledger/fabric-baseimage && 
 docker tag hyperledger/fabric-baseos:0.4.10 hyperledger/fabric-baseos && 
 docker tag hyperledger/fabric-couchdb:0.4.10 hyperledger/fabric-couchdb
+
+sudo su
+cd blockchain-trace-fabric/blockchain-trace-bcnetwork/webapp
+./start.sh
 ```
