@@ -30,6 +30,9 @@ sudo su
 cd blockchain-trace-fabric/blockchain-trace-bcnetwork/basic-network
 ./start.sh
 
+cd ../webapp/
+./start.sh
+
 docker-compose ps
         Name                      Command               State                                           Ports
 ------------------------------------------------------------------------------------------------------------------------------------------------------
