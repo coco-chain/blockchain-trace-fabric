@@ -33,6 +33,14 @@ cd blockchain-trace-fabric/blockchain-trace-bcnetwork/basic-network
 cd ../webapp/
 ./start.sh
 
+cnpm install
+sudo cnpm install -g pm2
+rm -rf hfc-key-store
+node enrollAdmin.js
+node registerUser.js
+
+pm2 start app.js
+
 docker-compose ps
         Name                      Command               State                                           Ports
 ------------------------------------------------------------------------------------------------------------------------------------------------------
