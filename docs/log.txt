@@ -1,2 +1,138 @@
 docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.trace.com/users/Admin@org1.trace.com/msp" -e "CORE_PEER_ADDRESS=peer0.org1.trace.com:7051" cli peer chaincode install -n drivercc -v 1.0 -l golang -p github.com/chaincode/drivercc/go/
 Error: No such container: cli
+
+cd blockchain-trace-fabric/blockchain-trace-bcnetwork/basic-network
+./start.sh
+
+# don't rewrite paths for Windows Git Bash users
+Creating peer0.org3.trace.com ...
+
+export MSYS_NO_PATHCONV=1
+Creating cli                  ...
+
+
+docker-compose -f docker-compose.yml down
+Removing network network_basic
+WARNING: Network network_basic not found.
+
+ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/trace.com/orderers/orderer.trace.com/msp/tlscacerts/tlsca.trace.com-cert.pem
+# wait for Hyperledger Fabric to start
+# incase of errors when running later commands, issue export FABRIC_START_TIMEOUT=<larger number>
+export FABRIC_START_TIMEOUT=10
+#echo ${FABRIC_START_TIMEOUT}
+sleep ${FABRIC_START_TIMEOUT}
+
+docker-compose -f docker-compose.yml up -d
+Creating network "network_basic" with the default driver
+Creating volume "network_orderer.trace.com" with default driver
+Creating volume "network_peer0.org1.trace.com" with default driver
+Creating volume "network_peer0.org2.trace.com" with default driver
+Creating volume "network_peer0.org3.trace.com" with default driver
+Creating volume "network_peer0.org4.trace.com" with default driver
+Creating volume "network_peer0.org5.trace.com" with default driver
+Creating orderer.trace.com ... done
+Creating ca.trace.com      ... done
+Creating couchdb           ... done
+Creating peer0.org5.trace.com ... done
+Creating peer0.org4.trace.com ... done
+Creating peer0.org2.trace.com ... done
+Creating peer0.org1.trace.com ... done
+Creating peer0.org3.trace.com ... done
+Creating cli                  ... done
+
+#
+#
+# 以下创建通道，加入通道，更新锚节点  分为使用TLS和不使用TLS ， 这里先不使用
+#
+#
+# Create the channel
+
+#Use TLS
+#docker exec cli peer channel create -o orderer.trace.com:7050 -c tracechannel --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/trace.com/orderers/orderer.trace.com/msp/tlscacerts/tlsca.trace.com-cert.pem -f ./channel-artifacts/channel.tx
+
+#UseLess TLS
+docker exec cli peer channel create -o orderer.trace.com:7050 -c tracechannel -f ./channel-artifacts/channel.tx
+2022-08-19 06:41:49.605 UTC [main] InitCmd -> WARN 001 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:49.611 UTC [main] SetOrdererEnv -> WARN 002 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:49.612 UTC [channelCmd] InitCmdFactory -> INFO 003 Endorser and orderer connections initialized
+2022-08-19 06:41:49.641 UTC [cli.common] readBlock -> INFO 004 Received block: 0
+
+
+# Join peer1 to the channel. #####################################################################################
+#Use TLS
+#docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.trace.com/users/Admin@org1.trace.com/msp" -e "CORE_PEER_ADDRESS=peer0.org1.trace.com:7051" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.trace.com/peers/peer0.org1.trace.com/tls/ca.crt" cli peer channel join --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/trace.com/orderers/orderer.trace.com/msp/tlscacerts/tlsca.trace.com-cert.pem -b tracechannel.block
+
+#UseLess TLS
+docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.trace.com/users/Admin@org1.trace.com/msp" -e "CORE_PEER_ADDRESS=peer0.org1.trace.com:7051" cli peer channel join  -b tracechannel.block
+2022-08-19 06:41:49.755 UTC [main] InitCmd -> WARN 001 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:49.761 UTC [main] SetOrdererEnv -> WARN 002 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:49.762 UTC [channelCmd] InitCmdFactory -> INFO 003 Endorser and orderer connections initialized
+2022-08-19 06:41:49.893 UTC [channelCmd] executeJoin -> INFO 004 Successfully submitted proposal to join channel
+
+#Update Anchors
+
+#Use Tls
+#docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.trace.com/users/Admin@org1.trace.com/msp" -e "CORE_PEER_ADDRESS=peer0.org1.trace.com:7051" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.trace.com/peers/peer0.org1.trace.com/tls/ca.crt" cli peer channel update -o orderer.trace.com:7050 -c tracechannel -f ./channel-artifacts/Org1MSPanchors.tx --tls --cafile $ORDERER_CA
+
+#UseLess TLS
+docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.trace.com/users/Admin@org1.trace.com/msp" -e "CORE_PEER_ADDRESS=peer0.org1.trace.com:7051" cli peer channel update -o orderer.trace.com:7050 -c tracechannel -f ./channel-artifacts/Org1MSPanchors.tx
+2022-08-19 06:41:50.007 UTC [main] InitCmd -> WARN 001 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:50.012 UTC [main] SetOrdererEnv -> WARN 002 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:50.013 UTC [channelCmd] InitCmdFactory -> INFO 003 Endorser and orderer connections initialized
+2022-08-19 06:41:50.022 UTC [channelCmd] update -> INFO 004 Successfully submitted channel update
+
+
+# Join peer2 to the channel.###########################################################################################################
+#Use TLS
+docker exec -e "CORE_PEER_LOCALMSPID=Org2MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.trace.com/users/Admin@org2.trace.com/msp" -e "CORE_PEER_ADDRESS=peer0.org2.trace.com:7051" -e "CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.trace.com/peers/peer0.org2.trace.com/tls/ca.crt" cli peer channel join -b tracechannel.block
+2022-08-19 06:41:50.136 UTC [main] InitCmd -> WARN 001 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:50.141 UTC [main] SetOrdererEnv -> WARN 002 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:50.142 UTC [channelCmd] InitCmdFactory -> INFO 003 Endorser and orderer connections initialized
+2022-08-19 06:41:50.235 UTC [channelCmd] executeJoin -> INFO 004 Successfully submitted proposal to join channel
+
+#Useless TLS
+docker exec -e "CORE_PEER_LOCALMSPID=Org2MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.trace.com/users/Admin@org2.trace.com/msp" -e "CORE_PEER_ADDRESS=peer0.org2.trace.com:7051" cli peer channel update -o orderer.trace.com:7050 -c tracechannel -f ./channel-artifacts/Org2MSPanchors.tx
+2022-08-19 06:41:50.348 UTC [main] InitCmd -> WARN 001 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:50.353 UTC [main] SetOrdererEnv -> WARN 002 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:50.354 UTC [channelCmd] InitCmdFactory -> INFO 003 Endorser and orderer connections initialized
+2022-08-19 06:41:50.363 UTC [channelCmd] update -> INFO 004 Successfully submitted channel update
+
+
+# Join peer3 to the channel.#################################################################################################################
+docker exec -e "CORE_PEER_LOCALMSPID=Org3MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3.trace.com/users/Admin@org3.trace.com/msp" -e "CORE_PEER_ADDRESS=peer0.org3.trace.com:7051" cli peer channel join -b tracechannel.block
+2022-08-19 06:41:50.481 UTC [main] InitCmd -> WARN 001 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:50.487 UTC [main] SetOrdererEnv -> WARN 002 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:50.489 UTC [channelCmd] InitCmdFactory -> INFO 003 Endorser and orderer connections initialized
+2022-08-19 06:41:50.570 UTC [channelCmd] executeJoin -> INFO 004 Successfully submitted proposal to join channel
+
+docker exec -e "CORE_PEER_LOCALMSPID=Org3MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3.trace.com/users/Admin@org3.trace.com/msp" -e "CORE_PEER_ADDRESS=peer0.org3.trace.com:7051" cli peer channel update -o orderer.trace.com:7050 -c tracechannel -f ./channel-artifacts/Org3MSPanchors.tx
+2022-08-19 06:41:50.683 UTC [main] InitCmd -> WARN 001 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:50.689 UTC [main] SetOrdererEnv -> WARN 002 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:50.690 UTC [channelCmd] InitCmdFactory -> INFO 003 Endorser and orderer connections initialized
+2022-08-19 06:41:50.700 UTC [channelCmd] update -> INFO 004 Successfully submitted channel update
+
+# Join peer4 to the channel.###############################################################################################################
+docker exec -e "CORE_PEER_LOCALMSPID=Org4MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org4.trace.com/users/Admin@org4.trace.com/msp" -e "CORE_PEER_ADDRESS=peer0.org4.trace.com:7051" cli peer channel join -b tracechannel.block
+2022-08-19 06:41:50.816 UTC [main] InitCmd -> WARN 001 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:50.821 UTC [main] SetOrdererEnv -> WARN 002 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:50.823 UTC [channelCmd] InitCmdFactory -> INFO 003 Endorser and orderer connections initialized
+2022-08-19 06:41:50.896 UTC [channelCmd] executeJoin -> INFO 004 Successfully submitted proposal to join channel
+
+docker exec -e "CORE_PEER_LOCALMSPID=Org4MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org4.trace.com/users/Admin@org4.trace.com/msp" -e "CORE_PEER_ADDRESS=peer0.org4.trace.com:7051" cli peer channel update -o orderer.trace.com:7050 -c tracechannel -f ./channel-artifacts/Org4MSPanchors.tx
+2022-08-19 06:41:51.015 UTC [main] InitCmd -> WARN 001 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:51.021 UTC [main] SetOrdererEnv -> WARN 002 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:51.022 UTC [channelCmd] InitCmdFactory -> INFO 003 Endorser and orderer connections initialized
+2022-08-19 06:41:51.030 UTC [channelCmd] update -> INFO 004 Successfully submitted channel update
+
+# Join peer5 to the channel.#################################################################################################################
+docker exec -e "CORE_PEER_LOCALMSPID=Org5MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org5.trace.com/users/Admin@org5.trace.com/msp" -e "CORE_PEER_ADDRESS=peer0.org5.trace.com:7051" cli peer channel join -b tracechannel.block
+2022-08-19 06:41:51.147 UTC [main] InitCmd -> WARN 001 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:51.152 UTC [main] SetOrdererEnv -> WARN 002 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:51.153 UTC [channelCmd] InitCmdFactory -> INFO 003 Endorser and orderer connections initialized
+2022-08-19 06:41:51.240 UTC [channelCmd] executeJoin -> INFO 004 Successfully submitted proposal to join channel
+
+docker exec -e "CORE_PEER_LOCALMSPID=Org5MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org5.trace.com/users/Admin@org5.trace.com/msp" -e "CORE_PEER_ADDRESS=peer0.org5.trace.com:7051" cli peer channel update -o orderer.trace.com:7050 -c tracechannel -f ./channel-artifacts/Org5MSPanchors.tx
+2022-08-19 06:41:51.355 UTC [main] InitCmd -> WARN 001 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:51.360 UTC [main] SetOrdererEnv -> WARN 002 CORE_LOGGING_LEVEL is no longer supported, please use the FABRIC_LOGGING_SPEC environment variable
+2022-08-19 06:41:51.361 UTC [channelCmd] InitCmdFactory -> INFO 003 Endorser and orderer connections initialized
+2022-08-19 06:41:51.371 UTC [channelCmd] update -> INFO 004 Successfully submitted channel update

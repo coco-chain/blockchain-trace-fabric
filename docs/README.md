@@ -30,6 +30,19 @@ sudo su
 cd blockchain-trace-fabric/blockchain-trace-bcnetwork/basic-network
 ./start.sh
 
+docker-compose ps
+        Name                      Command               State                                           Ports
+------------------------------------------------------------------------------------------------------------------------------------------------------
+ca.trace.com           sh -c fabric-ca-server sta ...   Up      0.0.0.0:7054->7054/tcp,:::7054->7054/tcp
+cli                    /bin/bash                        Up
+couchdb                tini -- /docker-entrypoint ...   Up      4369/tcp, 0.0.0.0:5984->5984/tcp,:::5984->5984/tcp, 9100/tcp
+orderer.trace.com      orderer                          Up      0.0.0.0:7050->7050/tcp,:::7050->7050/tcp
+peer0.org1.trace.com   peer node start                  Up      0.0.0.0:7051->7051/tcp,:::7051->7051/tcp, 0.0.0.0:7053->7053/tcp,:::7053->7053/tcp
+peer0.org2.trace.com   peer node start                  Up      0.0.0.0:8051->7051/tcp,:::8051->7051/tcp, 0.0.0.0:8053->7053/tcp,:::8053->7053/tcp
+peer0.org3.trace.com   peer node start                  Up      0.0.0.0:9051->7051/tcp,:::9051->7051/tcp, 0.0.0.0:9053->7053/tcp,:::9053->7053/tcp
+peer0.org4.trace.com   peer node start                  Up      0.0.0.0:10051->7051/tcp,:::10051->7051/tcp, 0.0.0.0:10053->7053/tcp,:::10053->7053/tcp
+peer0.org5.trace.com   peer node start                  Up      0.0.0.0:11051->7051/tcp,:::11051->7051/tcp, 0.0.0.0:11053->7053/tcp,:::11053->7053/tcp
+
 docker exec -e "CORE_PEER_LOCALMSPID=Org1MSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.trace.com/users/Admin@org1.trace.com/msp" -e "CORE_PEER_ADDRESS=peer0.org1.trace.com:7051" cli peer chaincode install -n drivercc -v 1.0 -l golang -p github.com/chaincode/drivercc/go/
 Error: No such container: cli
 
