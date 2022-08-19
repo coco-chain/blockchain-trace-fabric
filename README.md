@@ -156,7 +156,7 @@ spring:
 ### 2.修改连接区块链网络地址
 main.js，修改为区块链网络所在服务器地址
 ```yaml
-Vue.prototype.$httpUrl = "http://localhost:8080/route";
+Vue.prototype.$httpUrl = "http://localhost:8084/route";
 ```
 ### 3.启动项目
 > npm run dev

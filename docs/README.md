@@ -39,7 +39,10 @@ rm -rf hfc-key-store
 node enrollAdmin.js
 node registerUser.js
 
+node app.js
+
 pm2 start app.js
+pm2 stop app.js
 
 docker-compose ps
         Name                      Command               State                                           Ports

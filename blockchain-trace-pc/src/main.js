@@ -26,7 +26,7 @@ import axios from 'axios'
 import SnowflakeId from "snowflake-id";
 
 import JsonViewer from 'vue-json-viewer'
- 
+
 // Import JsonViewer as a Vue.js plugin
 Vue.use(JsonViewer)
 
@@ -54,7 +54,7 @@ Vue.prototype.msgInfo = function (msg) {
 }
 
 Vue.prototype.$httpBlock = axios;
-Vue.prototype.$httpUrl = "http://localhost:8080/route";
+Vue.prototype.$httpUrl = "http://localhost:8084/route";
 Vue.prototype.$snowFlakeId = SnowflakeId;
 Vue.prototype.$store = store;
 // 全局组件挂载
@@ -66,7 +66,7 @@ Vue.use(permission)
 //引入地图插件
 import VueAMap from 'vue-amap';
 Vue.use(VueAMap);
- 
+
 //高德地图方法
 VueAMap.initAMapApiLoader({
 　　key: '3e5db00ff818adf2b2e2f600f0a72608',
