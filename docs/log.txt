@@ -238,3 +238,8 @@ sudo docker-compose ps
 fastdfs-nginx     /entrypoint.sh nginx     Up      0.0.0.0:8088->8088/tcp,:::8088->8088/tcp
 fastdfs-storage   /entrypoint.sh storage   Up      0.0.0.0:23000->23000/tcp,:::23000->23000/tcp
 fastdfs-tracker   /entrypoint.sh tracker   Up      0.0.0.0:22122->22122/tcp,:::22122->22122/tcp
+
+fdfs_upload_file storage.conf anti-steal.jpg
+group1/M00/00/00/rBsABGMEdVCAE-TaAABdrZgsqUU990.jpg
+http://localhost:8088/group1/M00/00/00/rBsABGMEdVCAE-TaAABdrZgsqUU990.jpg
+http://49.232.6.131:8088/group1/M00/00/00/rBsABGMEdVCAE-TaAABdrZgsqUU990.jpg
