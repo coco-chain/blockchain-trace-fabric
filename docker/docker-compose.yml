@@ -46,7 +46,7 @@ services:
       - "8110:8080"
     volumes:
       - ./blockchain/uploadPath:/home/ruoyi/uploadPath
-      - ./blockchain/logs:/logs
+      - ./blockchain/logs:/home/ruoyi/logs
       - ./blockchain/backup:/backup
       - /etc/localtime:/etc/localtime
     depends_on:
