@@ -62,7 +62,11 @@ Error: No such container: cli
 
 docker exec -it cli bash
 
+cd docker-fastdfs
+sudo docker-compose up -d
 sudo docker exec -it fastdfs-storage /bin/bash
+cd /fdfs_conf
+fdfs_upload_file storage.conf anti-steal.jpg
 ```
 
 ```shell
