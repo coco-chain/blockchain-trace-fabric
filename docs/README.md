@@ -70,7 +70,8 @@ sudo docker exec -it fastdfs-storage /bin/bash
 cd /fdfs_conf
 fdfs_upload_file storage.conf anti-steal.jpg
 
-
+cd blockchain-trace-basic-data
+mvn clean package
 ```
 
 ```shell
