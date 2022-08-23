@@ -6,7 +6,7 @@ App.mpType = 'app'
 var Fly=require("flyio/dist/npm/wx")
 var fly=new Fly
 Vue.prototype.$httpBlock = fly
-Vue.prototype.$httpUrl = "http://ip:8084/route";
+Vue.prototype.$httpUrl = "http://49.232.6.131:8084/route";
 
 const app = new Vue(App)
 app.$mount()

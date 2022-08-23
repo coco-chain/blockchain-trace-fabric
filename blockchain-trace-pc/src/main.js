@@ -54,7 +54,7 @@ Vue.prototype.msgInfo = function (msg) {
 }
 
 Vue.prototype.$httpBlock = axios;
-Vue.prototype.$httpUrl = "http://localhost:8084/route";
+Vue.prototype.$httpUrl = "http://49.232.6.131:8084/route";
 Vue.prototype.$snowFlakeId = SnowflakeId;
 Vue.prototype.$store = store;
 // 全局组件挂载
