@@ -14,7 +14,7 @@ services:
     image: season/fastdfs:1.2
     container_name: fastdfs-storage
     links:
-      - tracker
+      - fastdfs-tracker
     restart: always
     volumes:
       - "./storage.conf:/fdfs_conf/storage.conf"
@@ -23,7 +23,7 @@ services:
     ports:
       - "23000:23000"
     environment:
-      TRACKER_SERVER: "tracker:22122"
+      TRACKER_SERVER: "fastdfs-tracker:22122"
     command: "storage"
 
   fastdfs-nginx:
@@ -34,10 +34,10 @@ services:
       - "./nginx.conf:/etc/nginx/conf/nginx.conf"
       - "./store_path0:/fastdfs/store_path"
     links:
-      - tracker
+      - fastdfs-tracker
     ports:
       - "8088:8088"
     environment:
-      TRACKER_SERVER: "tracker:22122"
+      TRACKER_SERVER: "fastdfs-tracker:22122"
     command: "nginx"
 
