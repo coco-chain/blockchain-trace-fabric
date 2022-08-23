@@ -116,6 +116,10 @@ sudo docker exec -it blockchain-fe bash
 sudo docker-compose logs -f blockchain
 
 http://49.232.6.131:8110
+
+cd blockchain-trace-pc
+cnpm install
+npm run dev
 ```
 
 ```shell
