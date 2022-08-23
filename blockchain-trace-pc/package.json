@@ -44,7 +44,7 @@
     "@smallwei/avue": "^2.8.14",
     "axios": "0.18.1",
     "clipboard": "2.0.4",
-    "core-js": "3.6.5",
+    "core-js": "^3.24.1",
     "echarts": "4.2.1",
     "element-ui": "2.13.2",
     "fabric-shim": "^2.2.0",
