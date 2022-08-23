@@ -1,5 +1,46 @@
 version: '3'
 services:
+  fastdfs-tracker:
+    image: season/fastdfs:1.2
+    container_name: fastdfs-tracker
+    restart: always
+    volumes:
+      - "./fastdfs-data/tracker_data:/fastdfs/tracker/data"
+    ports:
+      - "22122:22122"
+    command: "tracker"
+
+  fastdfs-storage:
+    image: season/fastdfs:1.2
+    container_name: fastdfs-storage
+    links:
+      - fastdfs-tracker
+    restart: always
+    volumes:
+      - "./fastdfs/storage.conf:/fdfs_conf/storage.conf"
+      - "./fastdfs-data/storage_base_path:/fastdfs/storage/data"
+      - "./fastdfs-data/store_path0:/fastdfs/store_path"
+    ports:
+      - "23000:23000"
+    environment:
+      TRACKER_SERVER: "fastdfs-tracker:22122"
+    command: "storage"
+
+  fastdfs-nginx:
+    image: season/fastdfs:1.2
+    container_name: fastdfs-nginx
+    restart: always
+    volumes:
+      - "./fastdfs/nginx.conf:/etc/nginx/conf/nginx.conf"
+      - "./fastdfs-data/store_path0:/fastdfs/store_path"
+    links:
+      - fastdfs-tracker
+    ports:
+      - "8088:8088"
+    environment:
+      TRACKER_SERVER: "fastdfs-tracker:22122"
+    command: "nginx"
+
   blockchain-mysql80:
     image: mysql:8.0
     container_name: blockchain-mysql
