@@ -62,7 +62,7 @@ Error: No such container: cli
 
 docker exec -it cli bash
 
-sudo docker exec -it storage /bin/bash
+sudo docker exec -it fastdfs-storage /bin/bash
 ```
 
 ```shell

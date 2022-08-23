@@ -1,8 +1,8 @@
 version: '3'
 services:
-  tracker:
+  fastdfs-tracker:
     image: season/fastdfs:1.2
-    container_name: tracker
+    container_name: fastdfs-tracker
     restart: always
     volumes:
       - "./tracker_data:/fastdfs/tracker/data"
@@ -10,9 +10,9 @@ services:
       - "22122:22122"
     command: "tracker"
 
-  storage:
+  fastdfs-storage:
     image: season/fastdfs:1.2
-    container_name: storage
+    container_name: fastdfs-storage
     links:
       - tracker
     restart: always
@@ -26,9 +26,9 @@ services:
       TRACKER_SERVER: "tracker:22122"
     command: "storage"
 
-  nginx:
+  fastdfs-nginx:
     image: season/fastdfs:1.2
-    container_name: fdfs-nginx
+    container_name: fastdfs-nginx
     restart: always
     volumes:
       - "./nginx.conf:/etc/nginx/conf/nginx.conf"
