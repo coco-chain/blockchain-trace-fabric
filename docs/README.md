@@ -101,7 +101,20 @@ create user 'blockchain'@'127.0.0.1' identified by 'blockchain123456';
 grant all privileges on blockchain.* to 'blockchain'@'127.0.0.1';
 flush privileges;
 
-mysql -h127.0.0.1 -uroot -p -P3319 blockchain < ../blockchain-community.sql
+mysql -h127.0.0.1 -uroot -p -P3310 blockchain < ../blockchain-community.sql
+
+sudo docker-compose up blockchain-redis
+sudo docker-compose up -d blockchain-redis
+
+sudo docker-compose build
+
+sudo docker-compose up blockchain
+sudo docker-compose up -d blockchain
+
+sudo docker-compose logs -f
+sudo docker exec -it blockchain-fe bash
+sudo docker-compose logs -f blockchain
+
 ```
 
 ```shell
