@@ -114,7 +114,6 @@ sudo docker-compose up -d blockchain
 sudo docker-compose logs -f
 sudo docker exec -it blockchain-fe bash
 sudo docker-compose logs -f blockchain
-/home/ruoyi/logs
 
 http://49.232.6.131:8110
 ```
