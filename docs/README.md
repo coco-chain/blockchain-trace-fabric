@@ -80,6 +80,8 @@ ln -s ../blockchain/Dockerfile Dockerfile
 cd ..
 cp ../blockchain-trace-basic-data/ruoyi-admin/target/ruoyi-admin.jar blockchain-fe/ 
 
+sudo docker-compose build
+
 sudo docker-compose up
 sudo docker-compose up -d
 sudo docker-compose ps
