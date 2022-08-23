@@ -75,6 +75,31 @@ mvn clean package
 mvn clean package -Dmaven.test.skip=true
 
 cd ../docker
+cd blockchain-fe
+ln -s ../blockchain/Dockerfile Dockerfile
+cd ..
+cp ../blockchain-trace-basic-data/ruoyi-admin/target/ruoyi-admin.jar blockchain-fe/ 
+
+sudo docker-compose up
+sudo docker-compose up -d
+sudo docker-compose ps
+
+sudo docker-compose up blockchain-mysql80
+sudo docker-compose up -d blockchain-mysql80
+
+mysql -h127.0.0.1 -uroot -p -P3310
+blockchain123456
+
+show databases;
+use blockchain;
+
+create database blockchain default character set utf8mb4 collate utf8mb4_unicode_ci;
+use blockchain;
+create user 'blockchain'@'127.0.0.1' identified by 'blockchain123456';
+grant all privileges on blockchain.* to 'blockchain'@'127.0.0.1';
+flush privileges;
+
+mysql -h127.0.0.1 -uroot -p -P3319 blockchain < ../blockchain-community.sql
 ```
 
 ```shell
