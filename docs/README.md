@@ -112,6 +112,7 @@ sudo docker-compose up blockchain
 sudo docker-compose up -d blockchain
 
 sudo docker-compose logs -f
+sudo docker-compose ps
 sudo docker exec -it blockchain-fe bash
 sudo docker-compose logs -f blockchain
 
@@ -120,6 +121,9 @@ http://49.232.6.131:8110
 cd blockchain-trace-pc
 cnpm install
 npm run dev
+
+admin
+admin123
 ```
 
 ```shell
