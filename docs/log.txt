@@ -390,3 +390,13 @@ blockchain-mysql   docker-entrypoint.sh --cha ...   Up      0.0.0.0:3310->3306/t
 blockchain-redis   docker-entrypoint.sh redis ...   Up      0.0.0.0:6382->6379/tcp,:::6382->6379/tcp
 
 无法获取服务端连接资源：can't create connection to/172.27.0.4:23000
+
+sudo docker-compose ps
+      Name                    Command               State                          Ports
+---------------------------------------------------------------------------------------------------------------
+blockchain-fe      java -Djava.security.egd=f ...   Up      0.0.0.0:8110->8080/tcp,:::8110->8080/tcp
+blockchain-mysql   docker-entrypoint.sh --cha ...   Up      0.0.0.0:3310->3306/tcp,:::3310->3306/tcp, 33060/tcp
+blockchain-redis   docker-entrypoint.sh redis ...   Up      0.0.0.0:6382->6379/tcp,:::6382->6379/tcp
+fastdfs-nginx      /entrypoint.sh nginx             Up      0.0.0.0:8088->8088/tcp,:::8088->8088/tcp
+fastdfs-storage    /entrypoint.sh storage           Up      0.0.0.0:23000->23000/tcp,:::23000->23000/tcp
+fastdfs-tracker    /entrypoint.sh tracker           Up      0.0.0.0:22122->22122/tcp,:::22122->22122/tcp
