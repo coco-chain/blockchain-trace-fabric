@@ -381,3 +381,10 @@ blockchain-fe         |  |  | \ `'   /|   `-'  /
 blockchain-fe         |  |  |  \    /  \      /
 blockchain-fe         |  ''-'   `'-'    `-..-'
 blockchain-fe         | 15:25:08.554 [Quartz Scheduler [RuoyiScheduler]] INFO  o.q.c.QuartzScheduler - [start,547] - Scheduler RuoyiScheduler_$_553511eb29311661239505763 started.
+
+sudo docker-compose ps
+      Name                    Command               State                          Ports
+---------------------------------------------------------------------------------------------------------------
+blockchain-fe      java -Djava.security.egd=f ...   Up      0.0.0.0:8110->8080/tcp,:::8110->8080/tcp
+blockchain-mysql   docker-entrypoint.sh --cha ...   Up      0.0.0.0:3310->3306/tcp,:::3310->3306/tcp, 33060/tcp
+blockchain-redis   docker-entrypoint.sh redis ...   Up      0.0.0.0:6382->6379/tcp,:::6382->6379/tcp
