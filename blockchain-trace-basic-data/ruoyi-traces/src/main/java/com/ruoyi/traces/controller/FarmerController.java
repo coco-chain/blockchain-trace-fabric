@@ -64,7 +64,7 @@ public class FarmerController extends BaseController {
         String imageBase64 = cropsImageVo.getImageBase64().replace("data:image/jpeg;base64,", "");
         File file = Base64Util.base64ConvertFile(imageBase64);
         StorePath storePath = this.fastFileStorageClient.uploadImageAndCrtThumbImage(new FileInputStream(file),file.length(),"jpg",null);
-        return AjaxResult.success(address+storePath.getFullPath());
+        return AjaxResult.success(address + storePath.getFullPath());
     }
 
     /**

@@ -37,7 +37,7 @@ fdfs:
     width: 60
     height: 60
   tracker-list: 172.21.16.11:22122
-  address: 49.232.6.131
+  address: http://49.232.6.131/
 
 # 日志配置
 logging:
