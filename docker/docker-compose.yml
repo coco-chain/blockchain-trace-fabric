@@ -43,9 +43,9 @@ services:
       dockerfile: Dockerfile
     container_name: blockchain-fe
     ports:
-      - "8106:8080"
+      - "8110:8080"
     volumes:
-      - ./blockchain/storage:/storage
+      - ./blockchain/uploadPath:/home/ruoyi/uploadPath
       - ./blockchain/logs:/logs
       - ./blockchain/backup:/backup
       - /etc/localtime:/etc/localtime
